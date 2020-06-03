@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, TextField, Grid, Paper } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
-// import { useSound } from 'use-sound';
-// import click from '../../public';
 
 const INITIAL_RESULT = 0;
 
@@ -42,12 +40,12 @@ const Calculator = props => {
         }
     }))();
 
-    // const [play] = useSound(click);
     const [expression, setExpression] = useState(INITIAL_RESULT);
     const [result, setResult] = useState(INITIAL_RESULT);
 
     const handleOnClick = (button) => {
-        // play();
+        const audioEl = document.getElementsByClassName("audio-element")[0]
+        audioEl.play()
         const newExpr = expression !== 0 ? `${expression}${button}` : button;
         setExpression(newExpr);
     }
@@ -114,7 +112,7 @@ const Calculator = props => {
                         className={classes.resultField}
                         id="outlined-helperText"
                         label={expressionLabel || DEFAULTS.expressionLabel}
-                        
+
                         variant="outlined"
                         onChange={handleResultOnchange} value={expression}
                     />
@@ -152,6 +150,9 @@ const Calculator = props => {
                     {equalButton()}
                 </Grid>
             </Grid>
+            <audio className="audio-element">
+                <source src="https://api.coderrocketfuel.com/assets/pomodoro-times-up.mp3"></source>
+            </audio>
         </div>
     )
 };

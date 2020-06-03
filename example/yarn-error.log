@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/share/yarn/bin/yarn.js add use-sound
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js add react-dom
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/home/johnpaul/Workspace/react/pocket-calculator/pocket-calculator/example/node_modules/@babel/code-frame/README.md'
+  Error: EACCES: permission denied, unlink '/home/johnpaul/Workspace/react/pocket-calculator/pocket-calculator/example/node_modules/@babel/code-frame/LICENSE'
 
 npm manifest: 
   {
@@ -33,7 +33,8 @@ npm manifest:
       "@material-ui/core": "^4.10.1",
       "react": "link:../node_modules/react",
       "react-dom": "link:../node_modules/react-dom",
-      "react-scripts": "link:../node_modules/react-scripts"
+      "react-scripts": "link:../node_modules/react-scripts",
+      "use-sound": "^1.0.2"
     },
     "devDependencies": {
       "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
@@ -5104,6 +5105,11 @@ Lockfile:
     version "2.8.8"
     resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.8.tgz#7539bd4bc1e0e0a895815a2e0262420b12858488"
     integrity sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==
+  
+  howler@^2.1.3:
+    version "2.2.0"
+    resolved "https://registry.yarnpkg.com/howler/-/howler-2.2.0.tgz#0e2c780997ae65ab9a1a186333031beac1c63c6b"
+    integrity sha512-sGPkrAQy7jh5mNDbkRNG0F82R2HFDYNsQXBcX4smXQT0y0F4UMsa/+jXaGwWvcrajWr2tDB7JUkH7G5qSnuIyQ==
   
   hpack.js@^2.1.6:
     version "2.1.6"
@@ -10386,6 +10392,13 @@ Lockfile:
     dependencies:
       punycode "1.3.2"
       querystring "0.2.0"
+  
+  use-sound@^1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/use-sound/-/use-sound-1.0.2.tgz#1a867d284268012b6fbd8610e0594d3f750e2788"
+    integrity sha512-Nj8fsyYYz/09njAumAR04y1YfEf88D8/aicCZjWr7TSb+ekR/qGM+4wLCk0dHZBTiDQSGC+HpoVb3zlgopfkNQ==
+    dependencies:
+      howler "^2.1.3"
   
   use@^3.1.0:
     version "3.1.1"

@@ -47,6 +47,8 @@ const Calculator = props => {
   const [result, setResult] = useState(INITIAL_RESULT);
 
   const handleOnClick = button => {
+    const audioEl = document.getElementsByClassName("audio-element")[0];
+    audioEl.play();
     const newExpr = expression !== 0 ? `${expression}${button}` : button;
     setExpression(newExpr);
   };
@@ -143,7 +145,11 @@ const Calculator = props => {
   }, calculatorButton(3), calculatorButton(2), calculatorButton(1), calculatorButton('+')), /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 12
-  }, calculatorButton(0), calculatorButton('.'), calculatorButton('/'), equalButton())));
+  }, calculatorButton(0), calculatorButton('.'), calculatorButton('/'), equalButton())), /*#__PURE__*/React.createElement("audio", {
+    className: "audio-element"
+  }, /*#__PURE__*/React.createElement("source", {
+    src: "https://api.coderrocketfuel.com/assets/pomodoro-times-up.mp3"
+  })));
 };
 
 export default Calculator;

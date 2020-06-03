@@ -13,7 +13,7 @@
     "@johnpaul97/pocket-calculator": "link:..",
     "@material-ui/core": "^4.10.1",
     "react": "link:../node_modules/react",
-    "react-dom": "link:../node_modules/react-dom",
+    "react-dom": "^16.13.1",
     "react-scripts": "link:../node_modules/react-scripts",
     "use-sound": "^1.0.2"
   },
