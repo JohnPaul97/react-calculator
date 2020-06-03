@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, TextField, Grid, Paper } from '@material-ui/core';
+import { Button, TextField, Grid, Switch } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 
 const INITIAL_RESULT = 0;
@@ -12,40 +12,51 @@ const DEFAULTS = {
 }
 
 const Calculator = props => {
-    const { backgroundColor, buttonColor, resultLabel, expressionLabel } = props;
-    const classes = makeStyles(theme => ({
-        root: {
-            padding: '10px',
-            margin: '10px',
-            width: '50%',
-            backgroundColor: backgroundColor || DEFAULTS.backgroundColor,
-            borderRadius: '10px',
-            border: `1px solid black`,
-            flexGrow: 0,
-            width: '300px'
-        },
-        button: {
-            padding: theme.spacing(1),
-            textAlign: "center",
-            color: theme.palette.text.primary,
-            backgroundColor: buttonColor || DEFAULTS.buttonColor,
-            margin: "5px"
-        },
-        resultField: {
-            padding: theme.spacing(1),
-            backgroundColor: backgroundColor || DEFAULTS.backgroundColor,
-        },
-        padding: {
-            padding: 'top 10px'
-        }
-    }))();
+    const { backgroundColor, buttonColor, resultLabel, expressionLabel } = props,
+        classes = makeStyles(theme => ({
+            root: {
+                padding: '10px',
+                margin: '10px',
+                width: '50%',
+                backgroundColor: backgroundColor || DEFAULTS.backgroundColor,
+                borderRadius: '10px',
+                border: `1px solid black`,
+                flexGrow: 0,
+                width: '300px'
+            },
+            button: {
+                padding: theme.spacing(1),
+                textAlign: "center",
+                color: theme.palette.text.primary,
+                backgroundColor: buttonColor || DEFAULTS.buttonColor,
+                margin: "5px"
+            },
+            resultField: {
+                padding: theme.spacing(1),
+                backgroundColor: backgroundColor || DEFAULTS.backgroundColor,
+            },
+            padding: {
+                padding: 'top 10px'
+            }
+        }))()
+        , audio = new Audio("https://storage.cloud.google.com/johnpaul-bucket/click2.mp3");
 
     const [expression, setExpression] = useState(INITIAL_RESULT);
     const [result, setResult] = useState(INITIAL_RESULT);
+    const [isPlayingAudio, setIsPlayingAudio] = useState(true);
+
+    const playsAudio = () => {
+        if (isPlayingAudio) {
+            audio.play();
+        }
+    }
+
+    const handleIsPlayingAudio = () => {
+        setIsPlayingAudio(!isPlayingAudio);
+    }
 
     const handleOnClick = (button) => {
-        const audioEl = document.getElementsByClassName("audio-element")[0]
-        audioEl.play()
+        playsAudio();
         const newExpr = expression !== 0 ? `${expression}${button}` : button;
         setExpression(newExpr);
     }
@@ -56,11 +67,13 @@ const Calculator = props => {
     }, [expression]);
 
     const handleReset = () => {
+        playsAudio();
         setExpression(INITIAL_RESULT);
         setResult(INITIAL_RESULT);
     }
 
     const handleEqualOnClick = () => {
+        playsAudio();
         setExpression(result);
     }
 
@@ -116,6 +129,12 @@ const Calculator = props => {
                         variant="outlined"
                         onChange={handleResultOnchange} value={expression}
                     />
+                    <Switch
+                        checked={isPlayingAudio}
+                        onChange={handleIsPlayingAudio}
+                        name="playingAudio"
+                        inputProps={{ 'aria-label': 'secondary checkbox' }}
+                    />
                 </Grid>
                 <Grid item xs={12}>
                     {calculatorButton('(')}
@@ -150,9 +169,6 @@ const Calculator = props => {
                     {equalButton()}
                 </Grid>
             </Grid>
-            <audio className="audio-element">
-                <source src="https://api.coderrocketfuel.com/assets/pomodoro-times-up.mp3"></source>
-            </audio>
         </div>
     )
 };

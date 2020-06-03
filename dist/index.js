@@ -17,8 +17,8 @@ var Calculator = function Calculator(props) {
   var backgroundColor = props.backgroundColor,
       buttonColor = props.buttonColor,
       resultLabel = props.resultLabel,
-      expressionLabel = props.expressionLabel;
-  var classes = styles.makeStyles(function (theme) {
+      expressionLabel = props.expressionLabel,
+      classes = styles.makeStyles(function (theme) {
     var _root;
 
     return {
@@ -46,7 +46,8 @@ var Calculator = function Calculator(props) {
         padding: 'top 10px'
       }
     };
-  })();
+  })(),
+      audio = new Audio("https://storage.cloud.google.com/johnpaul-bucket/click2.mp3");
 
   var _useState = React.useState(INITIAL_RESULT),
       expression = _useState[0],
@@ -56,9 +57,22 @@ var Calculator = function Calculator(props) {
       result = _useState2[0],
       setResult = _useState2[1];
 
+  var _useState3 = React.useState(true),
+      isPlayingAudio = _useState3[0],
+      setIsPlayingAudio = _useState3[1];
+
+  var playsAudio = function playsAudio() {
+    if (isPlayingAudio) {
+      audio.play();
+    }
+  };
+
+  var handleIsPlayingAudio = function handleIsPlayingAudio() {
+    setIsPlayingAudio(!isPlayingAudio);
+  };
+
   var handleOnClick = function handleOnClick(button) {
-    var audioEl = document.getElementsByClassName("audio-element")[0];
-    audioEl.play();
+    playsAudio();
     var newExpr = expression !== 0 ? "" + expression + button : button;
     setExpression(newExpr);
   };
@@ -68,11 +82,13 @@ var Calculator = function Calculator(props) {
   }, [expression]);
 
   var handleReset = function handleReset() {
+    playsAudio();
     setExpression(INITIAL_RESULT);
     setResult(INITIAL_RESULT);
   };
 
   var handleEqualOnClick = function handleEqualOnClick() {
+    playsAudio();
     setExpression(result);
   };
 
@@ -144,6 +160,13 @@ var Calculator = function Calculator(props) {
     variant: "outlined",
     onChange: handleResultOnchange,
     value: expression
+  }), /*#__PURE__*/React__default.createElement(core.Switch, {
+    checked: isPlayingAudio,
+    onChange: handleIsPlayingAudio,
+    name: "playingAudio",
+    inputProps: {
+      'aria-label': 'secondary checkbox'
+    }
   })), /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
     xs: 12
@@ -159,11 +182,7 @@ var Calculator = function Calculator(props) {
   }, calculatorButton(3), calculatorButton(2), calculatorButton(1), calculatorButton('+')), /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
     xs: 12
-  }, calculatorButton(0), calculatorButton('.'), calculatorButton('/'), equalButton())), /*#__PURE__*/React__default.createElement("audio", {
-    className: "audio-element"
-  }, /*#__PURE__*/React__default.createElement("source", {
-    src: "https://api.coderrocketfuel.com/assets/pomodoro-times-up.mp3"
-  })));
+  }, calculatorButton(0), calculatorButton('.'), calculatorButton('/'), equalButton())));
 };
 
 module.exports = Calculator;

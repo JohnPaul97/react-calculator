@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, TextField, Button } from '@material-ui/core';
+import { Grid, TextField, Switch, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const INITIAL_RESULT = 0;
@@ -16,8 +16,8 @@ const Calculator = props => {
     buttonColor,
     resultLabel,
     expressionLabel
-  } = props;
-  const classes = makeStyles(theme => ({
+  } = props,
+        classes = makeStyles(theme => ({
     root: {
       padding: '10px',
       margin: '10px',
@@ -42,13 +42,24 @@ const Calculator = props => {
     padding: {
       padding: 'top 10px'
     }
-  }))();
+  }))(),
+        audio = new Audio("https://storage.cloud.google.com/johnpaul-bucket/click2.mp3");
   const [expression, setExpression] = useState(INITIAL_RESULT);
   const [result, setResult] = useState(INITIAL_RESULT);
+  const [isPlayingAudio, setIsPlayingAudio] = useState(true);
+
+  const playsAudio = () => {
+    if (isPlayingAudio) {
+      audio.play();
+    }
+  };
+
+  const handleIsPlayingAudio = () => {
+    setIsPlayingAudio(!isPlayingAudio);
+  };
 
   const handleOnClick = button => {
-    const audioEl = document.getElementsByClassName("audio-element")[0];
-    audioEl.play();
+    playsAudio();
     const newExpr = expression !== 0 ? `${expression}${button}` : button;
     setExpression(newExpr);
   };
@@ -58,11 +69,13 @@ const Calculator = props => {
   }, [expression]);
 
   const handleReset = () => {
+    playsAudio();
     setExpression(INITIAL_RESULT);
     setResult(INITIAL_RESULT);
   };
 
   const handleEqualOnClick = () => {
+    playsAudio();
     setExpression(result);
   };
 
@@ -130,6 +143,13 @@ const Calculator = props => {
     variant: "outlined",
     onChange: handleResultOnchange,
     value: expression
+  }), /*#__PURE__*/React.createElement(Switch, {
+    checked: isPlayingAudio,
+    onChange: handleIsPlayingAudio,
+    name: "playingAudio",
+    inputProps: {
+      'aria-label': 'secondary checkbox'
+    }
   })), /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 12
@@ -145,11 +165,7 @@ const Calculator = props => {
   }, calculatorButton(3), calculatorButton(2), calculatorButton(1), calculatorButton('+')), /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 12
-  }, calculatorButton(0), calculatorButton('.'), calculatorButton('/'), equalButton())), /*#__PURE__*/React.createElement("audio", {
-    className: "audio-element"
-  }, /*#__PURE__*/React.createElement("source", {
-    src: "https://api.coderrocketfuel.com/assets/pomodoro-times-up.mp3"
-  })));
+  }, calculatorButton(0), calculatorButton('.'), calculatorButton('/'), equalButton())));
 };
 
 export default Calculator;
