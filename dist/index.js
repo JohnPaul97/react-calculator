@@ -48,6 +48,19 @@ var Calculator = function Calculator(props) {
     };
   })(),
       audio = new Audio("https://storage.cloud.google.com/johnpaul-bucket/click2.mp3");
+  var CustomSwitch = styles.withStyles({
+    switchBase: {
+      color: backgroundColor || DEFAULTS.backgroundColor,
+      '&$checked': {
+        color: buttonColor || DEFAULTS.buttonColor
+      },
+      '&$checked + $track': {
+        backgroundColor: buttonColor || DEFAULTS.buttonColor
+      }
+    },
+    checked: {},
+    track: {}
+  })(core.Switch);
 
   var _useState = React.useState(INITIAL_RESULT),
       expression = _useState[0],
@@ -160,14 +173,14 @@ var Calculator = function Calculator(props) {
     variant: "outlined",
     onChange: handleResultOnchange,
     value: expression
-  }), /*#__PURE__*/React__default.createElement(core.Switch, {
-    checked: isPlayingAudio,
-    onChange: handleIsPlayingAudio,
-    name: "playingAudio",
-    inputProps: {
-      'aria-label': 'secondary checkbox'
-    }
-  })), /*#__PURE__*/React__default.createElement(core.Grid, {
+  })), /*#__PURE__*/React__default.createElement(core.FormControlLabel, {
+    control: /*#__PURE__*/React__default.createElement(CustomSwitch, {
+      checked: isPlayingAudio,
+      onChange: handleIsPlayingAudio,
+      name: "radio-audio"
+    }),
+    label: "Play audio"
+  }), /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
     xs: 12
   }, calculatorButton('('), resetButton(), calculatorButton(')')), /*#__PURE__*/React__default.createElement(core.Grid, {

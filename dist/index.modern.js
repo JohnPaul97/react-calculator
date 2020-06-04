@@ -1,86 +1,109 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, TextField, Switch, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Switch, Grid, TextField, FormControlLabel, Button } from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
-const INITIAL_RESULT = 0;
-const DEFAULTS = {
+var INITIAL_RESULT = 0;
+var DEFAULTS = {
   backgroundColor: '#7e7e7e',
   buttonColor: '#46403D',
   resultLabel: 'result',
   expressionLabel: 'expression'
 };
 
-const Calculator = props => {
-  const {
-    backgroundColor,
-    buttonColor,
-    resultLabel,
-    expressionLabel
-  } = props,
-        classes = makeStyles(theme => ({
-    root: {
-      padding: '10px',
-      margin: '10px',
-      width: '50%',
-      backgroundColor: backgroundColor || DEFAULTS.backgroundColor,
-      borderRadius: '10px',
-      border: `1px solid black`,
-      flexGrow: 0,
-      width: '300px'
-    },
-    button: {
-      padding: theme.spacing(1),
-      textAlign: "center",
-      color: theme.palette.text.primary,
-      backgroundColor: buttonColor || DEFAULTS.buttonColor,
-      margin: "5px"
-    },
-    resultField: {
-      padding: theme.spacing(1),
-      backgroundColor: backgroundColor || DEFAULTS.backgroundColor
-    },
-    padding: {
-      padding: 'top 10px'
-    }
-  }))(),
-        audio = new Audio("https://storage.cloud.google.com/johnpaul-bucket/click2.mp3");
-  const [expression, setExpression] = useState(INITIAL_RESULT);
-  const [result, setResult] = useState(INITIAL_RESULT);
-  const [isPlayingAudio, setIsPlayingAudio] = useState(true);
+var Calculator = function Calculator(props) {
+  var backgroundColor = props.backgroundColor,
+      buttonColor = props.buttonColor,
+      resultLabel = props.resultLabel,
+      expressionLabel = props.expressionLabel,
+      classes = makeStyles(function (theme) {
+    var _root;
 
-  const playsAudio = () => {
+    return {
+      root: (_root = {
+        padding: '10px',
+        margin: '10px',
+        width: '50%',
+        backgroundColor: backgroundColor || DEFAULTS.backgroundColor,
+        borderRadius: '10px',
+        border: "1px solid black",
+        flexGrow: 0
+      }, _root["width"] = '300px', _root),
+      button: {
+        padding: theme.spacing(1),
+        textAlign: "center",
+        color: theme.palette.text.primary,
+        backgroundColor: buttonColor || DEFAULTS.buttonColor,
+        margin: "5px"
+      },
+      resultField: {
+        padding: theme.spacing(1),
+        backgroundColor: backgroundColor || DEFAULTS.backgroundColor
+      },
+      padding: {
+        padding: 'top 10px'
+      }
+    };
+  })(),
+      audio = new Audio("https://storage.cloud.google.com/johnpaul-bucket/click2.mp3");
+  var CustomSwitch = withStyles({
+    switchBase: {
+      color: backgroundColor || DEFAULTS.backgroundColor,
+      '&$checked': {
+        color: buttonColor || DEFAULTS.buttonColor
+      },
+      '&$checked + $track': {
+        backgroundColor: buttonColor || DEFAULTS.buttonColor
+      }
+    },
+    checked: {},
+    track: {}
+  })(Switch);
+
+  var _useState = useState(INITIAL_RESULT),
+      expression = _useState[0],
+      setExpression = _useState[1];
+
+  var _useState2 = useState(INITIAL_RESULT),
+      result = _useState2[0],
+      setResult = _useState2[1];
+
+  var _useState3 = useState(true),
+      isPlayingAudio = _useState3[0],
+      setIsPlayingAudio = _useState3[1];
+
+  var playsAudio = function playsAudio() {
     if (isPlayingAudio) {
       audio.play();
     }
   };
 
-  const handleIsPlayingAudio = () => {
+  var handleIsPlayingAudio = function handleIsPlayingAudio() {
     setIsPlayingAudio(!isPlayingAudio);
   };
 
-  const handleOnClick = button => {
+  var handleOnClick = function handleOnClick(button) {
     playsAudio();
-    const newExpr = expression !== 0 ? `${expression}${button}` : button;
+    var newExpr = expression !== 0 ? "" + expression + button : button;
     setExpression(newExpr);
   };
 
-  useEffect(() => {
+  useEffect(function () {
     updateResult();
   }, [expression]);
 
-  const handleReset = () => {
+  var handleReset = function handleReset() {
     playsAudio();
     setExpression(INITIAL_RESULT);
     setResult(INITIAL_RESULT);
   };
 
-  const handleEqualOnClick = () => {
+  var handleEqualOnClick = function handleEqualOnClick() {
     playsAudio();
     setExpression(result);
   };
 
-  const updateResult = () => {
-    let newResult = null;
+  var updateResult = function updateResult() {
+    var newResult = null;
 
     try {
       newResult = eval(expression);
@@ -91,31 +114,35 @@ const Calculator = props => {
     setResult(newResult);
   };
 
-  const handleResultOnchange = e => {
-    const {
-      value
-    } = e.target;
+  var handleResultOnchange = function handleResultOnchange(e) {
+    var value = e.target.value;
     value === '' ? setExpression(0) : setExpression(value);
   };
 
   function calculatorButton(value) {
     return /*#__PURE__*/React.createElement(Button, {
       className: classes.button,
-      onClick: () => handleOnClick(value)
+      onClick: function onClick() {
+        return handleOnClick(value);
+      }
     }, value);
   }
 
   function resetButton() {
     return /*#__PURE__*/React.createElement(Button, {
       className: classes.button,
-      onClick: () => handleReset()
+      onClick: function onClick() {
+        return handleReset();
+      }
     }, "C");
   }
 
   function equalButton() {
     return /*#__PURE__*/React.createElement(Button, {
       className: classes.button,
-      onClick: () => handleEqualOnClick()
+      onClick: function onClick() {
+        return handleEqualOnClick();
+      }
     }, "=");
   }
 
@@ -143,14 +170,14 @@ const Calculator = props => {
     variant: "outlined",
     onChange: handleResultOnchange,
     value: expression
-  }), /*#__PURE__*/React.createElement(Switch, {
-    checked: isPlayingAudio,
-    onChange: handleIsPlayingAudio,
-    name: "playingAudio",
-    inputProps: {
-      'aria-label': 'secondary checkbox'
-    }
-  })), /*#__PURE__*/React.createElement(Grid, {
+  })), /*#__PURE__*/React.createElement(FormControlLabel, {
+    control: /*#__PURE__*/React.createElement(CustomSwitch, {
+      checked: isPlayingAudio,
+      onChange: handleIsPlayingAudio,
+      name: "radio-audio"
+    }),
+    label: "Play audio"
+  }), /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 12
   }, calculatorButton('('), resetButton(), calculatorButton(')')), /*#__PURE__*/React.createElement(Grid, {

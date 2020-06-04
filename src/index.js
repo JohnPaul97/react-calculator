@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, TextField, Grid, Switch } from '@material-ui/core';
-import { makeStyles } from "@material-ui/core/styles";
+import { Button, TextField, Grid, Switch, FormControlLabel}  from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 const INITIAL_RESULT = 0;
 
@@ -40,6 +40,20 @@ const Calculator = props => {
             }
         }))()
         , audio = new Audio("https://storage.cloud.google.com/johnpaul-bucket/click2.mp3");
+
+    const CustomSwitch = withStyles({
+        switchBase: {
+            color: backgroundColor || DEFAULTS.backgroundColor,
+            '&$checked': {
+                color: buttonColor || DEFAULTS.buttonColor,
+            },
+            '&$checked + $track': {
+                backgroundColor: buttonColor || DEFAULTS.buttonColor,
+            },
+        },
+        checked: {},
+        track: {},
+    })(Switch);
 
     const [expression, setExpression] = useState(INITIAL_RESULT);
     const [result, setResult] = useState(INITIAL_RESULT);
@@ -129,18 +143,14 @@ const Calculator = props => {
                         variant="outlined"
                         onChange={handleResultOnchange} value={expression}
                     />
-                    <Switch
-                        checked={isPlayingAudio}
-                        onChange={handleIsPlayingAudio}
-                        name="playingAudio"
-                        inputProps={{ 'aria-label': 'secondary checkbox' }}
-                    />
                 </Grid>
+                <FormControlLabel control={<CustomSwitch checked={isPlayingAudio} onChange={handleIsPlayingAudio} name="radio-audio" />}
+                        label="Play audio">
+                    </FormControlLabel>
                 <Grid item xs={12}>
                     {calculatorButton('(')}
                     {resetButton()}
                     {calculatorButton(')')}
-                    {/* <img src={collorpallet}/> */}
                 </Grid>
 
                 <Grid item xs={12}>

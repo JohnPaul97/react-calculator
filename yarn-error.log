@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/share/yarn/bin/yarn.js add use-sound
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js add @material-ui
 
 PATH: 
-  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin
 
 Yarn version: 
   1.22.4
@@ -14,7 +14,17 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, rmdir '/home/johnpaul/Workspace/react/pocket-calculator/pocket-calculator/node_modules/react-scripts/node_modules/babel-loader/node_modules/.bin'
+  Error: https://registry.yarnpkg.com/@material-ui: Request "https://registry.yarnpkg.com/@material-ui" returned a 405
+      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66996:18)
+      at Request.self.callback (/usr/share/yarn/lib/cli.js:140748:22)
+      at Request.emit (events.js:315:20)
+      at Request.<anonymous> (/usr/share/yarn/lib/cli.js:141720:10)
+      at Request.emit (events.js:315:20)
+      at IncomingMessage.<anonymous> (/usr/share/yarn/lib/cli.js:141642:12)
+      at Object.onceWrapper (events.js:421:28)
+      at IncomingMessage.emit (events.js:327:22)
+      at endReadableNT (_stream_readable.js:1221:12)
+      at processTicksAndRejections (internal/process/task_queues.js:84:21)
 
 npm manifest: 
   {
@@ -46,7 +56,6 @@ npm manifest:
       "react": "^16.0.0"
     },
     "devDependencies": {
-      "microbundle-crl": "^0.13.10",
       "babel-eslint": "^10.0.3",
       "cross-env": "^7.0.2",
       "eslint": "^6.8.0",
@@ -60,6 +69,7 @@ npm manifest:
       "eslint-plugin-react": "^7.17.0",
       "eslint-plugin-standard": "^4.0.1",
       "gh-pages": "^2.2.0",
+      "microbundle-crl": "^0.13.10",
       "npm-run-all": "^4.1.5",
       "prettier": "^2.0.4",
       "react": "^16.13.1",
@@ -68,7 +78,10 @@ npm manifest:
     },
     "files": [
       "dist"
-    ]
+    ],
+    "dependencies": {
+      "use-sound": "^1.0.2"
+    }
   }
 
 yarn manifest: 
@@ -5385,6 +5398,11 @@ Lockfile:
     version "2.8.8"
     resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.8.tgz#7539bd4bc1e0e0a895815a2e0262420b12858488"
     integrity sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==
+  
+  howler@^2.1.3:
+    version "2.2.0"
+    resolved "https://registry.yarnpkg.com/howler/-/howler-2.2.0.tgz#0e2c780997ae65ab9a1a186333031beac1c63c6b"
+    integrity sha512-sGPkrAQy7jh5mNDbkRNG0F82R2HFDYNsQXBcX4smXQT0y0F4UMsa/+jXaGwWvcrajWr2tDB7JUkH7G5qSnuIyQ==
   
   hpack.js@^2.1.6:
     version "2.1.6"
@@ -11088,6 +11106,13 @@ Lockfile:
     dependencies:
       punycode "1.3.2"
       querystring "0.2.0"
+  
+  use-sound@^1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/use-sound/-/use-sound-1.0.2.tgz#1a867d284268012b6fbd8610e0594d3f750e2788"
+    integrity sha512-Nj8fsyYYz/09njAumAR04y1YfEf88D8/aicCZjWr7TSb+ekR/qGM+4wLCk0dHZBTiDQSGC+HpoVb3zlgopfkNQ==
+    dependencies:
+      howler "^2.1.3"
   
   use@^3.1.0:
     version "3.1.1"
